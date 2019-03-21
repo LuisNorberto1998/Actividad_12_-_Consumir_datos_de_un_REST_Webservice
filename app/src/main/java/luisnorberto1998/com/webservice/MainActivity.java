@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity
     //Para tener acceso a la lista que se creo en el Layout
     private ListView lv_client_list;
 
+    //Adapter es un ArrayAdapter encargado de almacenar los registros que se mostraran en el ListView
+    private  ArrayAdapter adapter;
+
+    //getAllContactsURL cadena de texto que contiene la URL a la que se realizara la conexion
+    private String getAllClientsURL="http://192.168.0.250:8080/api_clientes?user_hash=12345&action=get";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
