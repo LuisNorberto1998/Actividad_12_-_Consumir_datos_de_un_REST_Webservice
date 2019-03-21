@@ -72,6 +72,10 @@ public class MainActivity extends AppCompatActivity
         lv_client_list=(ListView) findViewById(R.id.lv_client_list);
         adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1);
         lv_client_list.setAdapter(adapter);
+
+        
+
+
     }
 
     @Override
@@ -129,5 +133,48 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Parseo para separar campos
+    private void webServiceRest(String requestURL){
+        try{
+            URL url = new URL(requestURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line = "";
+            String webServiceResult="";
+            while ((line = bufferedReader.readLine()) != null){
+                webServiceResult += line;
+            }
+            bufferedReader.close();
+            parseInformation(webServiceResult);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void parseInformation(String jsonResult){
+        JSONArray jsonArray = null;
+        String id_contacto;
+        String nombre;
+        String telefono;
+        String email;
+        try{
+            jsonArray = new JSONArray(jsonResult);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        for(int i=0;i<jsonArray.length();i++){
+            try{
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                id_contacto = jsonObject.getString("id_contacto");
+                nombre = jsonObject.getString("nombre");
+                telefono = jsonObject.getString("telefono");
+                email = jsonObject.getString("email");
+                adapter.add(id_contacto + ": " + nombre);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
     }
 }
