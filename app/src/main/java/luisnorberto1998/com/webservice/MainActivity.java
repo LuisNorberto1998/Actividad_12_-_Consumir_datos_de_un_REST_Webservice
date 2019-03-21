@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity
         adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1);
         lv_client_list.setAdapter(adapter);
 
-        
-
+        //Linea que junta las variables y los metodos agregados para JSON
+        webServiceRest(getAllClientsURL);
 
     }
 
@@ -155,10 +155,12 @@ public class MainActivity extends AppCompatActivity
 
     private void parseInformation(String jsonResult){
         JSONArray jsonArray = null;
-        String id_contacto;
-        String nombre;
-        String telefono;
-        String email;
+        String id_cliente;
+        String nombre_cliente;
+        String apellido_paterno_cliente;
+        String apellido_materno_cliente;
+        String email_cliente;
+        String telefono_cliente;
         try{
             jsonArray = new JSONArray(jsonResult);
         }catch (JSONException e){
@@ -167,11 +169,14 @@ public class MainActivity extends AppCompatActivity
         for(int i=0;i<jsonArray.length();i++){
             try{
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                id_contacto = jsonObject.getString("id_contacto");
-                nombre = jsonObject.getString("nombre");
-                telefono = jsonObject.getString("telefono");
-                email = jsonObject.getString("email");
-                adapter.add(id_contacto + ": " + nombre);
+                id_cliente = jsonObject.getString("id_cliente");
+                nombre_cliente = jsonObject.getString("nombre_cliente");
+                apellido_paterno_cliente = jsonObject.getString("apellido_paterno_cliente");
+                apellido_materno_cliente = jsonObject.getString("apellido_materno_cliente");
+                email_cliente = jsonObject.getString("email_cliente");
+                telefono_cliente = jsonObject.getString("telefono_cliente");
+                adapter.add(id_cliente + ": " + nombre_cliente + ": " + apellido_paterno_cliente + ": " +
+                        apellido_materno_cliente + ": " + email_cliente + ": " + telefono_cliente);
             }catch (JSONException e){
                 e.printStackTrace();
             }
