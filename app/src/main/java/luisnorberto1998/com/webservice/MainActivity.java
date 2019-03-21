@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.json.JSONArray;
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity
 
         //Permisos de establecer una conexion externa y dar permiso de mantenerla abierta
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
+
+        //Inicio de variables declaradas al inicio
+        lv_client_list=(ListView) findViewById(R.id.lv_client_list);
+        adapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        lv_client_list.setAdapter(adapter);
     }
 
     @Override
